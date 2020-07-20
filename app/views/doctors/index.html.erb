@@ -1,0 +1,23 @@
+<p>Hello  Dr. <%= current_doctor.full_name %></p>
+<%= link_to 'Logout', destroy_doctor_session_path, method: :delete, class: 'btn btn-primary' %>
+
+<center><p><h3> New Appointment </h3></p></center>
+  <%= render partial: 'appointments', locals: { appointments: @pending_appointments, actions: ['Accept', 'Reject'] } %>
+<hr/>
+
+<% unless @appointments['confirm'].blank? %>
+  <center><p><h3> Pending Appointment </h3></p></center>
+  <%= render partial: 'appointments', locals: { appointments: @appointments['confirm'], actions: [] } %>
+  <hr/>
+<% end %>
+
+<% unless @appointments['complete'].blank? %>
+  <center><p><h3>Completed Appointment</h3></p></center>
+  <%= render partial: 'appointments', locals: { appointments: @appointments['complete'], actions: [] } %>
+  <hr/>
+<% end %>
+
+<% unless @rejected_appointments.blank? %>
+  <center><p><h3> Rejected Appointment </h3></p></center>
+  <%= render partial: 'appointments', locals: { appointments: @rejected_appointments, actions: [] } %>
+<% end %>

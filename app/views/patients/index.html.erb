@@ -1,0 +1,42 @@
+<center> <h3>Patients</h3></center>
+<%= link_to 'Logout', destroy_patient_session_path, method: :delete, class: 'btn btn-default' %>
+
+<%= link_to 'Book New Appointment', new_patient_appointment_path(current_patient.id), class: 'btn btn-primary' %>
+
+<%= link_to 'Doctors', doctors_patients_path, class: 'btn btn-primary' %>
+<br/>
+<br/>
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Doctor</th>
+          <th>Speciality</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @appointments.each do |appointment| %>
+        <tr>
+          <td><%= appointment.title %></td>
+          <td><%= appointment.try(:doctor).try(:full_name) %></td>
+          <td><%= appointment.speciality.title %></td>
+          <td><%= appointment.start_time.strftime("%B %e, %Y at %I:%M %p") rescue '' %></td>
+          <td><%= appointment.end_time.strftime("%B %e, %Y at %I:%M %p") rescue '' %></td>
+          <td><%= appointment.status %></td>
+          <td>
+            <% if appointment.can_cancellable? %>
+              <%= link_to 'Cancel', cancel_patient_appointment_path(current_patient.id, appointment.id) %>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

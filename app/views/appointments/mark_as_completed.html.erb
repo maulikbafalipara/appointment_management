@@ -1,0 +1,11 @@
+<div>
+  <%= form_for @appointment, url: appointment_completed_path, method: :post do |f| %>
+    <%= hidden_field_tag :id, @appointment.id %>
+    <%= hidden_field_tag :patient_id, current_doctor.id %>
+    <div>
+      <%= label_tag :note, 'Prescriptions' %>
+      <%= text_field_tag :note, '', required: :required %>
+    </div>
+    <%= f.submit 'Book Appointment' %>
+  <% end %>
+</div>

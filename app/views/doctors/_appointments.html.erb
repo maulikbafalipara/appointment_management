@@ -1,0 +1,33 @@
+<% if appointments.blank? %>
+  <center>No any appointments</center>
+<% else %>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Patient</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <% unless actions.blank? %>
+          <th>Actions</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% appointments.each do |appointment| %>
+        <tr>
+          <td><%= appointment.title %></td>
+          <td><%= appointment.patient.full_name %></td>
+          <td><%= human_readable_datetime(appointment.start_time) %></td>
+          <td><%= human_readable_datetime(appointment.end_time) %></td>
+          <% unless actions.blank? %>
+            <td>
+              <%= link_to 'Accept', confirm_appointment_doctors_path(appointment.id), method: :post if actions.include?('Accept') %> | 
+              <%= link_to 'Reject', reject_appointment_doctors_path(appointment.id), method: :post if actions.include?('Reject') %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
