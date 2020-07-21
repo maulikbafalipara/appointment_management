@@ -26,7 +26,7 @@ class Appointment < ApplicationRecord
     status != 'cancel' && created_at+1.hour >= DateTime.current
   end
 
-  # private
+  private
 
   def validate_start_time_and_end_time
     if start_time < DateTime.now
@@ -46,7 +46,6 @@ class Appointment < ApplicationRecord
   end
 
   def set_notification_job
-    # Resque.enqueue_at((self.start_time-1.hour), AppointmentNotificationJob, self.id)
     AppointmentNotificationMailer.upcoming_appointment(id).deliver_later(wait_until: start_time-1.hour)
   end
 end

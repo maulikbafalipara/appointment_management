@@ -9,7 +9,7 @@
 
 ```bash
 $ bundle install
-$ rails db:create & rails db:migrate
+$ rails db:create & rails db:migrate & rails db:seed
 ```
 and other necessary steps
 
